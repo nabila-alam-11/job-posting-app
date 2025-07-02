@@ -11,11 +11,23 @@
     flex-direction: column;
   }
   .btn {
-    width: 24rem !important;
+    width: 21.5rem !important;
+  }
+  .search-bar {
+    width: 24.5rem !important;
   }
 }
 .spinner-border {
   width: 5rem !important;
   height: 5rem !important;
   margin: 10% 45%;
+}
+.navbar-toggler {
+  border: 1px solid #7bb8f6;
+}
+.navbar-toggler:focus {
+  box-shadow: 0px 0px 0px 2px #7bb8f6;
+}
+.menu {
+  width: 32px;
 }

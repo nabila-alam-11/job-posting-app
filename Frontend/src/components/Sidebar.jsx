@@ -1,10 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
+import menu from "../assests/menu.png";
 
 const Sidebar = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-primary">
-        <div className="container-fluid ms-4">
+        <div className="container-fluid ps-5">
           <Link className="navbar-brand text-white" to="/">
             Intern House
           </Link>
@@ -17,7 +18,8 @@ const Sidebar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            {/* <span className="navbar-toggler-icon"></span> */}
+            <img src={menu} className="menu" alt="menu" />
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">

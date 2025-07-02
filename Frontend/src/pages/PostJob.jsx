@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
-import useFetch from "../useFetch";
 
 const PostJob = () => {
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     jobTitle: "",
     companyName: "",
@@ -12,11 +12,18 @@ const PostJob = () => {
     description: "",
     qualifications: [],
   });
-  console.log(formData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    if (name === "qualifications") {
+      setFormData((prevData) => ({
+        ...prevData,
+        qualifications: value.split(", ").map((item) => item.trim()),
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   const addJob = async (newJob) => {
@@ -52,13 +59,19 @@ const PostJob = () => {
       qualifications: formData.qualifications,
     };
 
+    if (newJob) {
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 1000);
+    }
     try {
       await addJob(newJob);
       setFormData({
         jobTitle: "",
         companyName: "",
         location: "",
-        salary: null,
+        salary: 0,
         jobType: "",
         description: "",
         qualifications: [],
@@ -70,7 +83,15 @@ const PostJob = () => {
   return (
     <div>
       <Sidebar />
-      <div className="container-fluid my-4 ms-4 me-4">
+      <div className="container-fluid my-4 ps-5">
+        {success && (
+          <p
+            className="bg-success text-white rounded py-2 ps-2 pe-2"
+            style={{ width: "20rem" }}
+          >
+            Job added successfully!
+          </p>
+        )}
         <h1 className="my-4">Post a Job</h1>
         <form className="me-5" onSubmit={handleSubmit}>
           <label className="mb-2" htmlFor="job-title">
@@ -157,7 +178,7 @@ const PostJob = () => {
           <input
             name="qualifications"
             onChange={handleChange}
-            value={formData.qualifications}
+            value={formData.qualifications.join(", ")}
             className="mb-4 form-control"
             id="qualification"
             type="text"

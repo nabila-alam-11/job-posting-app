@@ -43,7 +43,7 @@ const App = () => {
     <div>
       <Sidebar />
       {!loading ? (
-        <div className="container-fluid my-4 ms-4 me-4">
+        <div className="container-fluid my-4 ps-5">
           <input
             placeholder="Search by job title..."
             className="form-control search-bar"
@@ -59,47 +59,51 @@ const App = () => {
             </p>
           )}
           <div className="row me-4">
-            {searchMatches?.map((job) => (
-              <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={job._id}>
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">{job?.jobTitle}</h5>
-                    <p>
-                      <strong>Company name: </strong>
-                      {job?.companyName}
-                    </p>
-                    <p>
-                      <strong>Location: </strong>
-                      {job?.location}
-                    </p>
-                    <p>
-                      <strong>Job Type: </strong>
-                      {job?.jobType}
-                    </p>
-                    <div className="d-flex gap-2 link-btn">
-                      <Link
-                        className="btn btn-primary button"
-                        to={`/job/job-details/${job._id}`}
-                      >
-                        See Details
-                      </Link>
-                      <button
-                        className="btn btn-danger button"
-                        onClick={() => {
-                          deleteJob(job._id);
-                          setDanger(true);
-                          setTimeout(() => {
-                            setDanger(false);
-                          }, 1000);
-                        }}
-                      >
-                        Delete
-                      </button>
+            {searchMatches?.length > 0 ? (
+              searchMatches?.map((job) => (
+                <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={job._id}>
+                  <div className="card">
+                    <div className="card-body">
+                      <h5 className="card-title">{job?.jobTitle}</h5>
+                      <p>
+                        <strong>Company name: </strong>
+                        {job?.companyName}
+                      </p>
+                      <p>
+                        <strong>Location: </strong>
+                        {job?.location}
+                      </p>
+                      <p>
+                        <strong>Job Type: </strong>
+                        {job?.jobType}
+                      </p>
+                      <div className="d-flex gap-2 link-btn">
+                        <Link
+                          className="btn btn-primary button"
+                          to={`/job/job-details/${job._id}`}
+                        >
+                          See Details
+                        </Link>
+                        <button
+                          className="btn btn-danger button"
+                          onClick={() => {
+                            deleteJob(job._id);
+                            setDanger(true);
+                            setTimeout(() => {
+                              setDanger(false);
+                            }, 1000);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p>No jobs found matching your search</p>
+            )}
           </div>
         </div>
       ) : (

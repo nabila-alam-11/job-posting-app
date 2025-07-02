@@ -1,0 +1,21 @@
+.search-bar {
+  width: 40rem;
+}
+.button {
+  width: 10rem;
+  letter-spacing: 1.2px;
+}
+@media (max-width: 500px) {
+  .link-btn {
+    display: flex;
+    flex-direction: column;
+  }
+  .btn {
+    width: 24rem !important;
+  }
+}
+.spinner-border {
+  width: 5rem !important;
+  height: 5rem !important;
+  margin: 10% 45%;
+}

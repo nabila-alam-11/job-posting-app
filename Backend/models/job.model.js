@@ -21,7 +21,6 @@ const jobSchema = new mongoose.Schema(
       enum: [
         "Full-time(On-site)",
         "Part-time(On-site)",
-
         "Full-time(Remote)",
         "Part-time(Remote)",
         "Full-time(Hybrid)",

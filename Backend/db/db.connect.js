@@ -6,7 +6,9 @@ const mongoUri = process.env.MONGODB;
 
 const initializeDatabase = async () => {
   await mongoose
-    .connect(mongoUri)
+    .connect(mongoUri, {
+      serverSelectionTimeoutMS: 3000000,
+    })
     .then(() => {
       console.log("Connected to Database");
     })

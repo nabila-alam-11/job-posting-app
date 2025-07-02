@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useFetch = (url, initialData) => {
-  const [data, setData] = useState(true);
+  const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,6 +17,7 @@ const useFetch = (url, initialData) => {
       .then((responseData) => {
         setData(responseData);
         setError(null);
+        setLoading(false);
       })
       .catch((error) => {
         console.log("An error occurred while fetching the data.");

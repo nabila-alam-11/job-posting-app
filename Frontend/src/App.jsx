@@ -3,10 +3,11 @@ import Sidebar from "./components/Sidebar";
 import useFetch from "./useFetch";
 import Spinner from "./components/Spinner";
 import { useState } from "react";
+import Error from "./components/Error";
 
 const App = () => {
-  const { data, loading } = useFetch(
-    "https://jobify-backend-blush.vercel.app/v1/jobs" || []
+  const { data, loading, error } = useFetch(
+    "https://jobify-backend-blush.vercel.app/v1/jobs"
   );
 
   const [searchJob, setSearchJob] = useState("");
@@ -42,72 +43,81 @@ const App = () => {
   return (
     <div>
       <Sidebar />
-      {!loading ? (
-        <div className="container-fluid my-4 ps-5">
-          <input
-            placeholder="Search by job title..."
-            className="form-control search-bar"
-            onChange={(e) => setSearchJob(e.target.value)}
-          />
-          <h3 className="my-4">All Jobs</h3>
-          {danger && (
-            <p
-              className="bg-danger py-2 ps-2 pe-2 rounded text-white"
-              style={{ width: "22rem" }}
-            >
-              Job deleted successfully!
-            </p>
-          )}
-          <div className="row me-4">
-            {searchMatches?.length > 0 ? (
-              searchMatches?.map((job) => (
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={job._id}>
-                  <div className="card">
-                    <div className="card-body">
-                      <h5 className="card-title">{job?.jobTitle}</h5>
-                      <p>
-                        <strong>Company name: </strong>
-                        {job?.companyName}
-                      </p>
-                      <p>
-                        <strong>Location: </strong>
-                        {job?.location}
-                      </p>
-                      <p>
-                        <strong>Job Type: </strong>
-                        {job?.jobType}
-                      </p>
-                      <div className="d-flex gap-2 link-btn">
-                        <Link
-                          className="btn btn-primary button"
-                          to={`/job/job-details/${job._id}`}
-                        >
-                          See Details
-                        </Link>
-                        <button
-                          className="btn btn-danger button"
-                          onClick={() => {
-                            deleteJob(job._id);
-                            setDanger(true);
-                            setTimeout(() => {
-                              setDanger(false);
-                            }, 1000);
-                          }}
-                        >
-                          Delete
-                        </button>
+      {error ? (
+        <Error />
+      ) : (
+        <>
+          {!loading ? (
+            <div className="container-fluid my-4 ps-5">
+              <input
+                placeholder="Search by job title..."
+                className="form-control search-bar"
+                onChange={(e) => setSearchJob(e.target.value)}
+              />
+              <h3 className="my-4">All Jobs</h3>
+              {danger && (
+                <p
+                  className="bg-danger py-2 ps-2 pe-2 rounded text-white"
+                  style={{ width: "22rem" }}
+                >
+                  Job deleted successfully!
+                </p>
+              )}
+              <div className="row me-4">
+                {searchMatches?.length > 0 ? (
+                  searchMatches?.map((job) => (
+                    <div
+                      className="col-lg-4 col-md-6 col-sm-12 mb-4"
+                      key={job._id}
+                    >
+                      <div className="card">
+                        <div className="card-body">
+                          <h5 className="card-title">{job?.jobTitle}</h5>
+                          <p>
+                            <strong>Company name: </strong>
+                            {job?.companyName}
+                          </p>
+                          <p>
+                            <strong>Location: </strong>
+                            {job?.location}
+                          </p>
+                          <p>
+                            <strong>Job Type: </strong>
+                            {job?.jobType}
+                          </p>
+                          <div className="d-flex gap-2 link-btn">
+                            <Link
+                              className="btn btn-primary button"
+                              to={`/job/job-details/${job._id}`}
+                            >
+                              See Details
+                            </Link>
+                            <button
+                              className="btn btn-danger button"
+                              onClick={() => {
+                                deleteJob(job._id);
+                                setDanger(true);
+                                setTimeout(() => {
+                                  setDanger(false);
+                                }, 1000);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No jobs found matching your search</p>
-            )}
-          </div>
-        </div>
-      ) : (
-        <Spinner />
+                  ))
+                ) : (
+                  <p>No jobs found matching your search</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <Spinner />
+          )}
+        </>
       )}
     </div>
   );

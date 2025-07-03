@@ -7,7 +7,7 @@ import Error from "../components/Error";
 const JobDetails = () => {
   const { jobId } = useParams();
   const { data, loading, error } = useFetch(
-    "https://jobify-backend-blush.vercel.app/v1/job"
+    "https://jobify-backend-blush.vercel.app/v1/jobs"
   );
   const jobDetails = data?.find((job) => job._id === jobId);
   return (
